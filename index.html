@@ -55,13 +55,14 @@
         margin-top: 0.5rem;
     }
 
-/* CATEGORY TABS – vertical list, 1 per row (never overlaps) */
+/* CATEGORY TABS – 2×2 grid, more space so nothing overlaps */
 .tabs {
     display: flex;
-    flex-direction: column;      /* stack buttons vertically */
-    align-items: stretch;
-    gap: 8px;
-    padding: 12px;
+    flex-wrap: wrap;                /* 2 rows */
+    justify-content: center;
+    column-gap: 10px;               /* horizontal gap */
+    row-gap: 14px;                  /* vertical gap between rows (bigger box) */
+    padding: 18px 12px 22px;        /* more padding inside the whole bar */
     background: rgba(20,60,36,0.95);
     position: sticky;
     top: 0;
@@ -69,9 +70,9 @@
 }
 
 .tabs a {
-    width: 100%;                 /* full width button */
+    flex: 0 0 46%;                  /* ~2 per row, with breathing room */
     text-align: center;
-    padding: 10px 16px;
+    padding: 12px 10px;             /* taller pill */
     border-radius: 25px;
     text-decoration: none;
     font-size: 13px;
@@ -80,6 +81,7 @@
     background: rgba(255,255,255,0.1);
     color: rgba(232,213,163,0.8);
 }
+
 
 .tabs a.active {
     background: #d4a84b;
