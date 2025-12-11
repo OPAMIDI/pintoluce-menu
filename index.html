@@ -144,6 +144,19 @@
         .lang-content { display: none; }
         body.lang-en .lang-content.lang-en { display: block; }
         body.lang-hu .lang-content.lang-hu { display: block; }
+
+        /* FIX: make tabs wrap instead of overlapping on small screens */
+@media (max-width: 600px) {
+    .tabs {
+        flex-wrap: wrap;      /* allow 2 rows instead of squishing */
+        justify-content: center;
+    }
+    .tabs a {
+        padding: 8px 12px;    /* slightly smaller pills */
+        font-size: 12px;
+    }
+}
+
     </style>
 </head>
 
