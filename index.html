@@ -55,26 +55,23 @@
         margin-top: 0.5rem;
     }
 
-/* Category tabs – one horizontal row with swipe on mobile */
+/* CATEGORY TABS – always a 2×2 grid, no overlap */
 .tabs {
     display: flex;
-    flex-wrap: nowrap;              /* keep all tabs on one row */
-    overflow-x: auto;               /* allow horizontal scrolling */
-    padding: 12px 8px;
+    flex-wrap: wrap;          /* allow multiple rows */
+    justify-content: center;
     gap: 8px;
+    padding: 12px;
     background: rgba(20,60,36,0.95);
     position: sticky;
     top: 0;
     z-index: 10;
-    scrollbar-width: none;          /* Firefox hide scrollbar */
-}
-.tabs::-webkit-scrollbar {
-    display: none;                  /* Safari/Chrome hide scrollbar */
 }
 
 .tabs a {
-    flex: 0 0 auto;                 /* each tab keeps its width */
-    padding: 10px 16px;
+    flex: 1 1 calc(50% - 12px);  /* 2 buttons per row */
+    text-align: center;
+    padding: 10px 14px;
     border-radius: 25px;
     text-decoration: none;
     font-size: 13px;
@@ -82,7 +79,6 @@
     white-space: nowrap;
     background: rgba(255,255,255,0.1);
     color: rgba(232,213,163,0.8);
-    text-align: center;
 }
 
 .tabs a.active {
@@ -90,13 +86,6 @@
     color: #1a4d2e;
 }
 
-/* optional: slightly smaller tabs on very small screens */
-@media (max-width: 400px) {
-    .tabs a {
-        font-size: 12px;
-        padding: 8px 12px;
-    }
-}
 
     .menu {
         padding: 1rem;
