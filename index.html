@@ -145,41 +145,8 @@
         body.lang-en .lang-content.lang-en { display: block; }
         body.lang-hu .lang-content.lang-hu { display: block; }
 
-        /* FIX: make tabs wrap instead of overlapping on small screens */
-@media (max-width: 600px) {
-    .tabs {
-        flex-wrap: wrap;      /* allow 2 rows instead of squishing */
-        justify-content: center;
-    }
-    .tabs a {
-        padding: 8px 12px;    /* slightly smaller pills */
-        font-size: 12px;
-    }
-}
-        @media (max-width: 400px) {
-    .lang-links {
-        flex-wrap: wrap;
-        gap: 8px;
-    }
-    .lang-links a {
-        padding: 8px 16px;
-    }
-}
-/* MOBILE LAYOUT: stack tabs vertically to avoid overlap */
-@media (max-width: 600px) {
-    .tabs {
-        flex-direction: column;   /* vertical list */
-        flex-wrap: nowrap;
-        align-items: stretch;
-        gap: 6px;
-    }
-    .tabs a {
-        width: 100%;              /* full-width buttons */
-        text-align: center;
-        padding: 10px 14px;
-        font-size: 13px;
-    }
-}
+
+
 /* FINAL FIX: Perfect tab layout on mobile */
 @media (max-width: 600px) {
     .tabs {
