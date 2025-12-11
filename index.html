@@ -55,11 +55,11 @@
         margin-top: 0.5rem;
     }
 
-/* CATEGORY TABS – always a 2×2 grid, no overlap */
+/* CATEGORY TABS – vertical list, 1 per row (never overlaps) */
 .tabs {
     display: flex;
-    flex-wrap: wrap;          /* allow multiple rows */
-    justify-content: center;
+    flex-direction: column;      /* stack buttons vertically */
+    align-items: stretch;
     gap: 8px;
     padding: 12px;
     background: rgba(20,60,36,0.95);
@@ -69,9 +69,9 @@
 }
 
 .tabs a {
-    flex: 1 1 calc(50% - 12px);  /* 2 buttons per row */
+    width: 100%;                 /* full width button */
     text-align: center;
-    padding: 10px 14px;
+    padding: 10px 16px;
     border-radius: 25px;
     text-decoration: none;
     font-size: 13px;
