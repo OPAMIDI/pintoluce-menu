@@ -55,35 +55,48 @@
         margin-top: 0.5rem;
     }
 
-    /* TABS (category buttons) */
-    .tabs {
-        display: flex;
-        overflow: hidden;
-        padding: 12px;
-        gap: 8px;
-        background: rgba(20,60,36,0.95);
-        position: sticky;
-        top: 0;
-        z-index: 10;
-        justify-content: center;
-        flex-wrap: wrap;
-    }
+/* Category tabs – one horizontal row with swipe on mobile */
+.tabs {
+    display: flex;
+    flex-wrap: nowrap;              /* keep all tabs on one row */
+    overflow-x: auto;               /* allow horizontal scrolling */
+    padding: 12px 8px;
+    gap: 8px;
+    background: rgba(20,60,36,0.95);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    scrollbar-width: none;          /* Firefox hide scrollbar */
+}
+.tabs::-webkit-scrollbar {
+    display: none;                  /* Safari/Chrome hide scrollbar */
+}
+
+.tabs a {
+    flex: 0 0 auto;                 /* each tab keeps its width */
+    padding: 10px 16px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+    background: rgba(255,255,255,0.1);
+    color: rgba(232,213,163,0.8);
+    text-align: center;
+}
+
+.tabs a.active {
+    background: #d4a84b;
+    color: #1a4d2e;
+}
+
+/* optional: slightly smaller tabs on very small screens */
+@media (max-width: 400px) {
     .tabs a {
-        flex: 0 0 auto;
-        padding: 10px 16px;
-        border-radius: 25px;
-        text-decoration: none;
-        font-size: 13px;
-        font-weight: 600;
-        white-space: nowrap;
-        background: rgba(255,255,255,0.1);
-        color: rgba(232,213,163,0.8);
-        text-align: center;
+        font-size: 12px;
+        padding: 8px 12px;
     }
-    .tabs a.active {
-        background: #d4a84b;
-        color: #1a4d2e;
-    }
+}
 
     .menu {
         padding: 1rem;
@@ -220,21 +233,7 @@
     body.lang-en .lang-content.lang-en { display: block; }
     body.lang-hu .lang-content.lang-hu { display: block; }
 
-    /* MOBILE: nicer tab layout (2 rows max, no overlap) */
-    @media (max-width: 600px) {
-        .tabs {
-            flex-wrap: wrap;
-        }
-        .tabs a {
-            flex: 1 1 calc(50% - 10px); /* 2 per row */
-            font-size: 13px;
-            padding: 10px;
-        }
-    }
-
-    @media (max-width: 380px) {
-        h1 { font-size: 2.2rem; }
-    }
+ 
 </style>
 
 </head>
