@@ -69,10 +69,14 @@
     z-index: 10;
 }
 
+/* UPDATED CODE FOR BETTER LAYOUT */
 .tabs a {
-    flex: 0 0 46%;                  /* ~2 per row, with breathing room */
+    /* flex-grow: 1, flex-shrink: 1, basis: 0 */
+    /* This allows them to shrink/grow equally while respecting 
+       the column-gap, ensuring they fit perfectly two per row. */
+    flex: 1 1 auto; 
     text-align: center;
-    padding: 12px 10px;             /* taller pill */
+    padding: 12px 10px;
     border-radius: 25px;
     text-decoration: none;
     font-size: 13px;
@@ -80,6 +84,7 @@
     white-space: nowrap;
     background: rgba(255,255,255,0.1);
     color: rgba(232,213,163,0.8);
+    min-width: 140px; /* Optional: Sets a minimum size for larger tablets */
 }
 
 
