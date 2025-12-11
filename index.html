@@ -165,6 +165,21 @@
         padding: 8px 16px;
     }
 }
+/* MOBILE LAYOUT: stack tabs vertically to avoid overlap */
+@media (max-width: 600px) {
+    .tabs {
+        flex-direction: column;   /* vertical list */
+        flex-wrap: nowrap;
+        align-items: stretch;
+        gap: 6px;
+    }
+    .tabs a {
+        width: 100%;              /* full-width buttons */
+        text-align: center;
+        padding: 10px 14px;
+        font-size: 13px;
+    }
+}
 
 
     </style>
