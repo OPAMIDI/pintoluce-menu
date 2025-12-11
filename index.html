@@ -1,44 +1,726 @@
-(function() {
-    function setLang(lang, save) {
-        if (!['en', 'hu'].includes(lang)) lang = 'en';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google" content="notranslate">
+    <title>Pintoluce Menu</title>
 
-        // Set body + <html> language
-        document.body.classList.remove('lang-en', 'lang-hu');
-        document.body.classList.add('lang-' + lang);
-        document.documentElement.lang = lang;
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: #1a4d2e; min-height: 100vh; }
 
-        // Button active state
-        document.querySelectorAll('[data-lang-switch]').forEach(function(el) {
-            el.classList.toggle('active', el.getAttribute('data-lang-switch') === lang);
-        });
-
-        // Remember choice
-        if (save && window.localStorage) {
-            try {
-                localStorage.setItem('pintoluce-lang', lang);
-            } catch (e) {}
+        .header { padding: 1.5rem 1rem; text-align: center; }
+        .lang-links { display: flex; justify-content: center; gap: 10px; margin-bottom: 1rem; }
+        .lang-links a {
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            background: rgba(255,255,255,0.15);
+            color: #e8d5a3;
+            cursor: pointer;
         }
-    }
+        .lang-links a.active { background: #d4a84b; color: #1a4d2e; }
 
-    document.addEventListener('DOMContentLoaded', function() {
-        let saved = null;
-        try {
-            saved = window.localStorage && localStorage.getItem('pintoluce-lang');
-        } catch (e) {}
+        h1 { font-size: 2.5rem; font-style: italic; color: #d4a84b; font-family: Georgia, serif; }
+        .tagline { color: rgba(212,168,75,0.9); font-style: italic; margin-top: 0.5rem; }
+        .subtitle { color: rgba(193,127,89,0.8); font-size: 0.75rem; margin-top: 0.5rem; }
 
-        const initialLang =
-            saved ||
-            (navigator.language && navigator.language.startsWith('hu') ? 'hu' : 'en');
+        .tabs {
+            display: flex;
+            overflow-x: auto;
+            padding: 12px;
+            gap: 8px;
+            background: rgba(20,60,36,0.95);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .tabs a {
+            flex-shrink: 0;
+            padding: 10px 16px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            white-space: nowrap;
+            background: rgba(255,255,255,0.1);
+            color: rgba(232,213,163,0.8);
+        }
+        .tabs a.active { background: #d4a84b; color: #1a4d2e; }
 
-        setLang(initialLang, false);
+        .menu { padding: 1rem; max-width: 500px; margin: 0 auto; padding-bottom: 100px; }
 
-        document.querySelectorAll('[data-lang-switch]').forEach(function(el) {
-            el.addEventListener('click', function(e) {
-                e.preventDefault();
-                const lang = el.getAttribute('data-lang-switch');
-                setLang(lang, true);
-            });
-        });
-    });
-})();
+        .section-title {
+            text-align: center;
+            color: #d4a84b;
+            font-size: 1.3rem;
+            font-style: italic;
+            font-family: Georgia, serif;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(212,168,75,0.3);
+        }
+
+        .item {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(52,211,153,0.15);
+            border-radius: 1rem;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+        }
+        .item-top {
+            display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem;
+        }
+        .item-name { font-weight: 700; color: #e8d5a3; font-size: 1rem; }
+        .item-tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            color: rgba(212,168,75,0.9);
+            background: rgba(212,168,75,0.1);
+            padding: 2px 8px;
+            border-radius: 20px;
+            margin-top: 4px;
+            font-style: italic;
+        }
+        .item-desc { font-size: 0.8rem; color: rgba(168,197,168,0.7); margin-top: 6px; line-height: 1.4; }
+        .item-price { font-weight: 700; color: #d4a84b; font-size: 1.1rem; white-space: nowrap; }
+        .item-allergens {
+            display: inline-block;
+            font-size: 0.7rem;
+            background: rgba(52,78,65,0.5);
+            color: rgba(212,168,75,0.8);
+            padding: 3px 8px;
+            border-radius: 20px;
+            margin-top: 6px;
+        }
+
+        .build-box {
+            background: rgba(52,78,65,0.4);
+            border: 1px solid rgba(52,211,153,0.2);
+            border-radius: 1rem;
+            padding: 1rem; margin-bottom: 1rem;
+        }
+        .build-title {
+            color: #d4a84b;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .build-num {
+            width: 24px; height: 24px;
+            background: rgba(212,168,75,0.2);
+            border-radius: 50%;
+            display: inline-flex; align-items: center; justify-content: center;
+            font-size: 0.8rem;
+        }
+        .build-item {
+            display: flex; justify-content: space-between;
+            padding: 8px 10px; background: rgba(255,255,255,0.05);
+            border-radius: 8px; margin-bottom: 6px; font-size: 0.9rem;
+        }
+        .build-item span:first-child { color: #e8d5a3; }
+        .build-item span:last-child { color: #d4a84b; font-weight: 600; }
+        .build-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+
+        .footer {
+            position: fixed; bottom: 0; left: 0; right: 0;
+            background: linear-gradient(transparent, #143c24 30%);
+            padding: 2rem 1rem 1rem; text-align: center;
+        }
+        .footer p { color: rgba(212,168,75,0.9); font-style: italic; }
+        .footer small { color: rgba(52,211,153,0.4); font-size: 0.65rem; letter-spacing: 2px; }
+
+        .note {
+            text-align: center;
+            font-size: 0.7rem; color: rgba(52,211,153,0.4);
+            margin-top: 1.5rem; padding-top: 1rem;
+            border-top: 1px solid rgba(52,211,153,0.2);
+        }
+
+        /* Language visibility */
+        .lang-content { display: none; }
+        body.lang-en .lang-content.lang-en { display: block; }
+        body.lang-hu .lang-content.lang-hu { display: block; }
+    </style>
+</head>
+
+<body class="lang-en">
+
+<header class="header">
+    <div class="lang-links">
+        <a href="#" data-lang-switch="hu">🇭🇺 Magyar</a>
+        <a href="#" data-lang-switch="en" class="active">🇬🇧 English</a>
+    </div>
+
+    <h1 translate="no">Pintoluce</h1>
+
+    <p class="tagline lang-content lang-en">Our Collection, Your Creation</p>
+    <p class="subtitle lang-content lang-en">European Soul • Fresh • Handcrafted Daily</p>
+
+    <p class="tagline lang-content lang-hu">A Mi Kollekciónk, A Te Alkotásod</p>
+    <p class="subtitle lang-content lang-hu">Európai Lélek • Friss • Kézzel Készítve Naponta</p>
+</header>
+
+<!-- English Tabs -->
+<nav class="tabs lang-content lang-en">
+    <a href="#salads-en" class="active">Salad Menu</a>
+    <a href="#pasta-en">Pasta Menu</a>
+    <a href="#fries-en">Chef's Loaded Fries</a>
+    <a href="#build-en">Build Your Own</a>
+</nav>
+
+<!-- Hungarian Tabs -->
+<nav class="tabs lang-content lang-hu">
+    <a href="#salads-hu" class="active">Saláta Menü</a>
+    <a href="#pasta-hu">Tészta Menü</a>
+    <a href="#fries-hu">Chef's Loaded Sült</a>
+    <a href="#build-hu">Állítsd Össze</a>
+</nav>
+
+<main class="menu">
+
+<!-- 🇬🇧 ENGLISH MENU START -->
+<div class="lang-content lang-en">
+    <!-- 🥗 SALADS (EN) -->
+    <section id="salads-en">
+        <h2 class="section-title">🥗 Salad Menu</h2>
+
+        <div class="item">
+            <div class="item-top">
+                <div>
+                    <div class="item-name">🌿 Mozzarella Salad</div>
+                    <div class="item-tag">Italian Classic</div>
+                </div>
+                <div class="item-price">4 500 Ft</div>
+            </div>
+            <p class="item-desc">Arugula • Mozzarella • Cherry Tomato • Basil Pesto • Pine Nuts</p>
+        </div>
+
+        <div class="item">
+            <div class="item-top">
+                <div>
+                    <div class="item-name">🫘 Pintobean Salad</div>
+                    <div class="item-tag">Vegan Protein Power</div>
+                </div>
+                <div class="item-price">4 500 Ft</div>
+            </div>
+            <p class="item-desc">Pinto Beans • Cucumber • Tomato • Tri-Color Bell Peppers • Cilantro • Lemon • Olive Oil • Red Onion</p>
+        </div>
+
+        <div class="item">
+            <div class="item-top">
+                <div>
+                    <div class="item-name">🧀 Caesar Salad</div>
+                    <div class="item-tag">Timeless Favorite</div>
+                </div>
+                <div class="item-price">4 500 Ft</div>
+            </div>
+            <p class="item-desc">Romaine Lettuce • Garlic Croutons • Parmesan • Caesar Dressing</p>
+        </div>
+
+        <div class="item">
+            <div class="item-top">
+                <div>
+                    <div class="item-name">🌾 Quinoa Salad</div>
+                    <div class="item-tag">Fresh Harvest Bowl</div>
+                </div>
+                <div class="item-price">4 500 Ft</div>
+            </div>
+            <p class="item-desc">White Quinoa • Parsley • Red Onion • Cucumber • Pomegranate • Lemon • Olive Oil</p>
+        </div>
+
+        <div class="item">
+            <div class="item-top">
+                <div>
+                    <div class="item-name">🍏 Green Apple Salad</div>
+                    <div class="item-tag">Detox Fresh & Crunchy</div>
+                </div>
+                <div class="item-price">4 500 Ft</div>
+            </div>
+            <p class="item-desc">Green Apple • Cabbage • Cucumber • Mint • Lemon • Olive Oil</p>
+        </div>
+
+        <div class="item">
+            <div class="item-top">
+                <div>
+                    <div class="item-name">🌊 Mediterranean Salad</div>
+                    <div class="item-tag">Light, Fresh & Protein-Rich</div>
+                </div>
+                <div class="item-price">4 500 Ft</div>
+            </div>
+            <p class="item-desc">Chickpeas • Cucumber • Cherry Tomato • Red Onion • Parsley • Lemon • Olive Oil</p>
+        </div>
+    </section>
+
+    <!-- 🍝 PASTA MENU (EN) -->
+    <section id="pasta-en">
+        <h2 class="section-title">🍝 Pasta Menu</h2>
+
+        <div class="item">
+            <div class="item-top">
+                <div>
+                    <div class="item-name">🍅 Tomater</div>
+                    <div class="item-tag">Classic Tomato Basil Spaghetti</div>
+                </div>
+                <div class="item-price">4 290 Ft</div>
+            </div>
+            <p class="item-desc">Spaghetti • San Marzano Tomato • Cherry Tomato • Fresh Basil • Parmesan Chips</p>
+            <span class="item-allergens">Allergens: 1, 7</span>
+        </div>
+
+        <div class="item">
+            <div class="item-top">
+                <div>
+                    <div class="item-name">🤍 Alfredo</div>
+                    <div class="item-tag">Creamy Mushroom Fettuccine</div>
+                </div>
+                <div class="item-price">4 800 Ft</div>
+            </div>
+            <p class="item-desc">Fettuccine • Cream • White Wine • Broccoli • Parsley • Nutmeg • Garlic • Mushroom</p>
+            <span class="item-allergens">Allergens: 1, 3, 7, 12</span>
+        </div>
+
+        <div class="item">
+            <div class="item-top">
+                <div>
+                    <div class="item-name">🌹 Rose</div>
+                    <div class="item-tag">Tomato & Cream Penne</div>
+                </div>
+                <div class="item-price">4 590 Ft</div>
+            </div>
+            <p class="item-desc">Penne • San Marzano Tomato • Cream • Parmesan</p>
+            <span class="item-allergens">Allergens: 1, 7</span>
+        </div>
+
+        <div class="item">
+            <div class="item-top">
+                <div>
+                    <div class="item-name">🦐 Shrimp</div>
+                    <div class="item-tag">Spicy Garlic Crab Sauce</div>
+                </div>
+                <div class="item-price">5 990 Ft</div>
+            </div>
+            <p class="item-desc">Spaghetti • Crab Sauce • Shrimp • Cherry Tomato • White Wine • Chili • Garlic</p>
+            <span class="item-allergens">Allergens: 1, 2, 4, 7, 12, 14</span>
+        </div>
+
+        <div class="item">
+            <div class="item-top">
+                <div>
+                    <div class="item-name">🍖 Pintoleze</div>
+                    <div class="item-tag">Slow-Cooked Bolognese Pappardelle</div>
+                </div>
+                <div class="item-price">5 490 Ft</div>
+            </div>
+            <p class="item-desc">Pappardelle • Bolognese Ragù • Parmesan Chips</p>
+            <span class="item-allergens">Allergens: 1, 3, 7, 9</span>
+        </div>
+
+        <div class="item">
+            <div class="item-top">
+                <div>
+                    <div class="item-name">🌿 Pesto Pasta</div>
+                    <div class="item-tag">Creamy Basil Gnocchi</div>
+                </div>
+                <div class="item-price">4 990 Ft</div>
+            </div>
+            <p class="item-desc">Gnocchi • Basil Pesto • Cream • Dried Tomato • Pine Nuts</p>
+            <span class="item-allergens">Allergens: 1, 3, 7, 8</span>
+        </div>
+
+        <div class="item">
+            <div class="item-top">
+                <div>
+                    <div class="item-name">🔥 Asian Fusion</div>
+                    <div class="item-tag">Spicy Soy Garlic Tagliatelle</div>
+                </div>
+                <div class="item-price">4 790 Ft</div>
+            </div>
+            <p class="item-desc">Tagliatelle • Soy Sauce • San Marzano Tomato • Chili-Garlic Oil • Pepper Mix • Spring Onion</p>
+            <span class="item-allergens">Allergens: 1, 6, 7</span>
+        </div>
+
+        <div class="item">
+            <div class="item-top">
+                <div>
+                    <div class="item-name">🌶 Shalioli</div>
+                    <div class="item-tag">Spicy Garlic Spaghetti</div>
+                </div>
+                <div class="item-price">4 490 Ft</div>
+            </div>
+            <p class="item-desc">Spaghetti • Chili-Garlic Oil • Parmesan • Parsley • Spicy Pepper</p>
+            <span class="item-allergens">Allergens: 1, 7</span>
+        </div>
+    </section>
+
+    <!-- 🍟 CHEF'S FRIES (EN) -->
+    <section id="fries-en">
+        <h2 class="section-title">🍟 Chef's Loaded Fries</h2>
+
+        <div class="item">
+            <div class="item-top">
+                <div class="item-name">🧀 Cheese & Jalapeño Fries</div>
+                <div class="item-price">2 890 Ft</div>
+            </div>
+            <p class="item-desc">Potato Fries • Cheese • Jalapeños • Classic Mayo</p>
+            <span class="item-allergens">Allergens: 1, 3, 7</span>
+        </div>
+
+        <div class="item">
+            <div class="item-top">
+                <div class="item-name">🥓 Bacon & Cheese Loaded Wedges</div>
+                <div class="item-price">3 390 Ft</div>
+            </div>
+            <p class="item-desc">Potato Wedges • Bacon • Cheese • Sour Cream</p>
+            <span class="item-allergens">Allergens: 7</span>
+        </div>
+
+        <div class="item">
+            <div class="item-top">
+                <div class="item-name">🥑 Guacamole Vegan Fries</div>
+                <div class="item-price">3 290 Ft</div>
+            </div>
+            <p class="item-desc">Sweet Potato Fries • Guacamole • Tomato Salata • Jalapeños</p>
+        </div>
+
+        <div class="item">
+            <div class="item-top">
+                <div class="item-name">💗 Pink Mayo Sweet Fries</div>
+                <div class="item-price">2 990 Ft</div>
+            </div>
+            <p class="item-desc">Sweet Potato Fries • Pink Mayo • Cheese</p>
+            <span class="item-allergens">Allergens: 1, 3, 7</span>
+        </div>
+
+        <div class="item">
+            <div class="item-top">
+                <div class="item-name">🔥 Spicy Bacon Fire Fries</div>
+                <div class="item-price">3 490 Ft</div>
+            </div>
+            <p class="item-desc">Potato Fries • Bacon • Jalapeños • Spicy Mayo • Cheese</p>
+            <span class="item-allergens">Allergens: 1, 3, 7</span>
+        </div>
+    </section>
+
+    <!-- 🍟 BUILD YOUR OWN (EN) -->
+    <section id="build-en">
+        <h2 class="section-title">🍟 Build Your Own</h2>
+
+        <div class="build-box">
+            <div class="build-title">
+                <span class="build-num">1</span> Choose Your Base
+            </div>
+            <div class="build-item"><span>🥔 Classic Potato Fries</span><span>1 890 Ft</span></div>
+            <div class="build-item"><span>🥔 Potato Wedges</span><span>2 090 Ft</span></div>
+            <div class="build-item"><span>🍠 Sweet Potato Fries</span><span>2 390 Ft</span></div>
+        </div>
+
+        <div class="build-box">
+            <div class="build-title">
+                <span class="build-num">2</span> Sauces
+            </div>
+            <div class="build-item"><span>🤍 Classic Mayo</span><span>390 Ft</span></div>
+            <div class="build-item"><span>💗 Pink Mayo (Beetroot)</span><span>390 Ft</span></div>
+            <div class="build-item"><span>🔥 Spicy Mayo</span><span>390 Ft</span></div>
+        </div>
+
+        <div class="build-box">
+            <div class="build-title">
+                <span class="build-num">3</span> Toppings
+            </div>
+            <div class="build-grid">
+                <div class="build-item"><span>🍅 Tomato Salata</span><span>390 Ft</span></div>
+                <div class="build-item"><span>🌶 Jalapeños</span><span>390 Ft</span></div>
+                <div class="build-item"><span>🥛 Sour Cream</span><span>490 Ft</span></div>
+                <div class="build-item"><span>🧀 Cheese</span><span>590 Ft</span></div>
+                <div class="build-item"><span>🥑 Guacamole</span><span>690 Ft</span></div>
+                <div class="build-item"><span>🥓 Bacon</span><span>790 Ft</span></div>
+            </div>
+        </div>
+
+        <p class="note">🌿 Please inform our staff of any allergies. Numbers indicate allergens.</p>
+    </section>
+
+</div> <!-- END ENGLISH CONTENT -->
+<!-- 🇭🇺 HUNGARIAN MENU START -->
+<div class="lang-content lang-hu">
+
+    <!-- 🥗 SALÁTA MENÜ (HU) -->
+    <section id="salads-hu">
+        <h2 class="section-title">🥗 Saláta Menü</h2>
+
+        <div class="item">
+            <div class="item-top">
+                <div>
+                    <div class="item-name">🌿 Mozzarella Saláta</div>
+                    <div class="item-tag">Olasz Klasszikus</div>
+                </div>
+                <div class="item-price">4 500 Ft</div>
+            </div>
+            <p class="item-desc">Rukkola • Mozzarella • Koktélparadicsom • Bazsalikomos Pesztó • Piniamogyoró</p>
+        </div>
+
+        <div class="item">
+            <div class="item-top">
+                <div>
+                    <div class="item-name">🫘 Pintobab Saláta</div>
+                    <div class="item-tag">Vegán Fehérjebomba</div>
+                </div>
+                <div class="item-price">4 500 Ft</div>
+            </div>
+            <p class="item-desc">Pintobab • Uborka • Paradicsom • Háromszínű Paprika • Koriander • Citrom • Olívaolaj • Lilahagyma</p>
+        </div>
+
+        <div class="item">
+            <div class="item-top">
+                <div>
+                    <div class="item-name">🧀 Caesar Saláta</div>
+                    <div class="item-tag">Örök Kedvenc</div>
+                </div>
+                <div class="item-price">4 500 Ft</div>
+            </div>
+            <p class="item-desc">Római Saláta • Fokhagymás Kruton • Parmezán • Caesar Öntet</p>
+        </div>
+
+        <div class="item">
+            <div class="item-top">
+                <div>
+                    <div class="item-name">🌾 Quinoa Saláta</div>
+                    <div class="item-tag">Friss Aratás Tál</div>
+                </div>
+                <div class="item-price">4 500 Ft</div>
+            </div>
+            <p class="item-desc">Fehér Quinoa • Petrezselyem • Lilahagyma • Uborka • Gránátalma • Citrom • Olívaolaj</p>
+        </div>
+
+        <div class="item">
+            <div class="item-top">
+                <div>
+                    <div class="item-name">🍏 Zöldalma Saláta</div>
+                    <div class="item-tag">Méregtelenítő & Ropogós</div>
+                </div>
+                <div class="item-price">4 500 Ft</div>
+            </div>
+            <p class="item-desc">Zöldalma • Káposzta • Uborka • Menta • Citrom • Olívaolaj</p>
+        </div>
+
+        <div class="item">
+            <div class="item-top">
+                <div>
+                    <div class="item-name">🌊 Mediterrán Saláta</div>
+                    <div class="item-tag">Könnyű, Friss & Fehérjedús</div>
+                </div>
+                <div class="item-price">4 500 Ft</div>
+            </div>
+            <p class="item-desc">Csicseriborsó • Uborka • Koktélparadicsom • Lilahagyma • Petrezselyem • Citrom • Olívaolaj</p>
+        </div>
+    </section>
+
+    <!-- 🍝 TÉSZTA MENÜ (HU) -->
+    <section id="pasta-hu">
+        <h2 class="section-title">🍝 Tészta Menü</h2>
+
+        <div class="item">
+            <div class="item-top">
+                <div>
+                    <div class="item-name">🍅 Tomater</div>
+                    <div class="item-tag">Klasszikus Paradicsomos-Bazsalikomos Spagetti</div>
+                </div>
+                <div class="item-price">4 290 Ft</div>
+            </div>
+            <p class="item-desc">Spagetti • San Marzano Paradicsom • Koktélparadicsom • Friss Bazsalikom • Parmezán Chips</p>
+            <span class="item-allergens">Allergének: 1, 7</span>
+        </div>
+
+        <div class="item">
+            <div class="item-top">
+                <div>
+                    <div class="item-name">🤍 Alfredo</div>
+                    <div class="item-tag">Krémes Gombás Fettuccine</div>
+                </div>
+                <div class="item-price">4 800 Ft</div>
+            </div>
+            <p class="item-desc">Fettuccine • Tejszín • Fehérbor • Brokkoli • Petrezselyem • Szerecsendió • Fokhagyma • Gomba</p>
+            <span class="item-allergens">Allergének: 1, 3, 7, 12</span>
+        </div>
+
+        <div class="item">
+            <div class="item-top">
+                <div>
+                    <div class="item-name">🌹 Rose</div>
+                    <div class="item-tag">Paradicsomos-Tejszínes Penne</div>
+                </div>
+                <div class="item-price">4 590 Ft</div>
+            </div>
+            <p class="item-desc">Penne • San Marzano Paradicsom • Tejszín • Parmezán</p>
+            <span class="item-allergens">Allergének: 1, 7</span>
+        </div>
+
+        <div class="item">
+            <div class="item-top">
+                <div>
+                    <div class="item-name">🦐 Shrimp</div>
+                    <div class="item-tag">Csípős Fokhagymás Rákszósz</div>
+                </div>
+                <div class="item-price">5 990 Ft</div>
+            </div>
+            <p class="item-desc">Spagetti • Rákszósz • Garnélarák • Koktélparadicsom • Fehérbor • Chili • Fokhagyma</p>
+            <span class="item-allergens">Allergének: 1, 2, 4, 7, 12, 14</span>
+        </div>
+
+        <div class="item">
+            <div class="item-top">
+                <div>
+                    <div class="item-name">🍖 Pintoleze</div>
+                    <div class="item-tag">Lassan Főzött Bolognai Pappardelle</div>
+                </div>
+                <div class="item-price">5 490 Ft</div>
+            </div>
+            <p class="item-desc">Pappardelle • Bolognai Ragù • Parmezán Chips</p>
+            <span class="item-allergens">Allergének: 1, 3, 7, 9</span>
+        </div>
+
+        <div class="item">
+            <div class="item-top">
+                <div>
+                    <div class="item-name">🌿 Pesto Pasta</div>
+                    <div class="item-tag">Krémes Bazsalikomos Gnocchi</div>
+                </div>
+                <div class="item-price">4 990 Ft</div>
+            </div>
+            <p class="item-desc">Gnocchi • Bazsalikomos Pesztó • Tejszín • Szárított Paradicsom • Piniamogyoró</p>
+            <span class="item-allergens">Allergének: 1, 3, 7, 8</span>
+        </div>
+
+        <div class="item">
+            <div class="item-top">
+                <div>
+                    <div class="item-name">🔥 Asian Fusion</div>
+                    <div class="item-tag">Csípős Szójás-Fokhagymás Tagliatelle</div>
+                </div>
+                <div class="item-price">4 790 Ft</div>
+            </div>
+            <p class="item-desc">Tagliatelle • Szójaszósz • San Marzano Paradicsom • Chili-Fokhagyma Olaj • Paprikakeverék • Újhagyma</p>
+            <span class="item-allergens">Allergének: 1, 6, 7</span>
+        </div>
+
+        <div class="item">
+            <div class="item-top">
+                <div>
+                    <div class="item-name">🌶 Shalioli</div>
+                    <div class="item-tag">Csípős Fokhagymás Spagetti</div>
+                </div>
+                <div class="item-price">4 490 Ft</div>
+            </div>
+            <p class="item-desc">Spagetti • Chili-Fokhagyma Olaj • Parmezán • Petrezselyem • Csípős Paprika</p>
+            <span class="item-allergens">Allergének: 1, 7</span>
+        </div>
+    </section>
+
+    <!-- 🍟 CHEF'S LOADED SÜLT (HU) -->
+    <section id="fries-hu">
+        <h2 class="section-title">🍟 Chef's Loaded Sült</h2>
+
+        <div class="item">
+            <div class="item-top">
+                <div class="item-name">🧀 Sajtos & Jalapeños Sült</div>
+                <div class="item-price">2 890 Ft</div>
+            </div>
+            <p class="item-desc">Sültkrumpli • Sajt • Jalapeño • Klasszikus Majonéz</p>
+            <span class="item-allergens">Allergének: 1, 3, 7</span>
+        </div>
+
+        <div class="item">
+            <div class="item-top">
+                <div class="item-name">🥓 Baconos-Sajtos Wedges</div>
+                <div class="item-price">3 390 Ft</div>
+            </div>
+            <p class="item-desc">Burgonya Wedges • Bacon • Sajt • Tejföl</p>
+            <span class="item-allergens">Allergének: 7</span>
+        </div>
+
+        <div class="item">
+            <div class="item-top">
+                <div class="item-name">🥑 Guacamole Vegán Sült</div>
+                <div class="item-price">3 290 Ft</div>
+            </div>
+            <p class="item-desc">Édesburgonya Sült • Guacamole • Paradicsom Salata • Jalapeño</p>
+        </div>
+
+        <div class="item">
+            <div class="item-top">
+                <div class="item-name">💗 Pink Majonézes Édesburgonya</div>
+                <div class="item-price">2 990 Ft</div>
+            </div>
+            <p class="item-desc">Édesburgonya Sült • Pink Majonéz • Sajt</p>
+            <span class="item-allergens">Allergének: 1, 3, 7</span>
+        </div>
+
+        <div class="item">
+            <div class="item-top">
+                <div class="item-name">🔥 Csípős Baconos Tűz Sült</div>
+                <div class="item-price">3 490 Ft</div>
+            </div>
+            <p class="item-desc">Sültkrumpli • Bacon • Jalapeño • Csípős Majonéz • Sajt</p>
+            <span class="item-allergens">Allergének: 1, 3, 7</span>
+        </div>
+    </section>
+
+    <!-- 🍟 ÁLLÍTSD ÖSSZE (HU) -->
+    <section id="build-hu">
+        <h2 class="section-title">🍟 Állítsd Össze</h2>
+
+        <div class="build-box">
+            <div class="build-title">
+                <span class="build-num">1</span> Válassz Alapot
+            </div>
+            <div class="build-item"><span>🥔 Klasszikus Sültkrumpli</span><span>1 890 Ft</span></div>
+            <div class="build-item"><span>🥔 Burgonya Wedges</span><span>2 090 Ft</span></div>
+            <div class="build-item"><span>🍠 Édesburgonya Sült</span><span>2 390 Ft</span></div>
+        </div>
+
+        <div class="build-box">
+            <div class="build-title">
+                <span class="build-num">2</span> Szószok
+            </div>
+            <div class="build-item"><span>🤍 Klasszikus Majonéz</span><span>390 Ft</span></div>
+            <div class="build-item"><span>💗 Pink Majonéz (Cékla)</span><span>390 Ft</span></div>
+            <div class="build-item"><span>🔥 Csípős Majonéz</span><span>390 Ft</span></div>
+        </div>
+
+        <div class="build-box">
+            <div class="build-title">
+                <span class="build-num">3</span> Feltétek
+            </div>
+            <div class="build-grid">
+                <div class="build-item"><span>🍅 Paradicsom Saláta</span><span>390 Ft</span></div>
+                <div class="build-item"><span>🌶 Jalapeño</span><span>390 Ft</span></div>
+                <div class="build-item"><span>🥛 Tejföl</span><span>490 Ft</span></div>
+                <div class="build-item"><span>🧀 Sajt</span><span>590 Ft</span></div>
+                <div class="build-item"><span>🥑 Guacamole</span><span>690 Ft</span></div>
+                <div class="build-item"><span>🥓 Bacon</span><span>790 Ft</span></div>
+            </div>
+        </div>
+
+        <p class="note">🌿 Kérjük, jelezze az allergiákat személyzetünknek. A számok allergéneket jelölnek.</p>
+    </section>
+
+</div> <!-- END HUNGARIAN CONTENT -->
+
+</main>
+
+<footer class="footer">
+    <p class="lang-content lang-en">Buon appetito!</p>
+    <p class="lang-content lang-hu">Jó étvágyat!</p>
+    <small>PINTOLUCE.COM</small>
+</footer>
+
+<!-- JavaScript that handles language switching -->
 <script src="language-toggle.js"></script>
+
+</body>
+</html>
+
