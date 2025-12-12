@@ -55,44 +55,34 @@
         margin-top: 0.5rem;
     }
 
-/* CATEGORY TABS – 2×2 grid, more space so nothing overlaps */
-.tabs {
-    display: flex;
-    flex-wrap: wrap;                /* 2 rows */
-    justify-content: center;
-    column-gap: 10px;               /* horizontal gap */
-    row-gap: 14px;                  /* vertical gap between rows (bigger box) */
-    padding: 18px 12px 22px;        /* more padding inside the whole bar */
-    background: rgba(20,60,36,0.95);
-    position: sticky;
-    top: 0;
-    z-index: 10;
-}
+    /* CATEGORY TABS */
+    .tabs {
+        display: none; /* Hidden by default, shown via lang classes */
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+        padding: 14px 10px;
+        background: rgba(20,60,36,0.95);
+        position: sticky;
+        top: 0;
+        z-index: 10;
+    }
 
-/* UPDATED CODE FOR BETTER LAYOUT */
-.tabs a {
-    /* flex-grow: 1, flex-shrink: 1, basis: 0 */
-    /* This allows them to shrink/grow equally while respecting 
-       the column-gap, ensuring they fit perfectly two per row. */
-    flex: 1 1 auto; 
-    text-align: center;
-    padding: 12px 10px;
-    border-radius: 25px;
-    text-decoration: none;
-    font-size: 13px;
-    font-weight: 600;
-    white-space: nowrap;
-    background: rgba(255,255,255,0.1);
-    color: rgba(232,213,163,0.8);
-    min-width: 140px; /* Optional: Sets a minimum size for larger tablets */
-}
+    .tabs a {
+        padding: 10px 14px;
+        border-radius: 25px;
+        text-decoration: none;
+        font-size: 12px;
+        font-weight: 600;
+        white-space: nowrap;
+        background: rgba(255,255,255,0.1);
+        color: rgba(232,213,163,0.8);
+    }
 
-
-.tabs a.active {
-    background: #d4a84b;
-    color: #1a4d2e;
-}
-
+    .tabs a.active {
+        background: #d4a84b;
+        color: #1a4d2e;
+    }
 
     .menu {
         padding: 1rem;
@@ -224,12 +214,19 @@
         border-top: 1px solid rgba(52,211,153,0.2);
     }
 
-    /* LANGUAGE VISIBILITY */
+    /* LANGUAGE VISIBILITY - FIXED */
     .lang-content { display: none; }
     body.lang-en .lang-content.lang-en { display: block; }
     body.lang-hu .lang-content.lang-hu { display: block; }
 
- 
+    /* FIX FOR TABS - they need flex, not block */
+    body.lang-en nav.tabs.lang-en { display: flex; }
+    body.lang-hu nav.tabs.lang-hu { display: flex; }
+
+    @media(max-width:380px) {
+        .tabs a { font-size: 11px; padding: 8px 10px; }
+        .build-grid { grid-template-columns: 1fr; }
+    }
 </style>
 
 </head>
@@ -251,18 +248,22 @@
     <p class="subtitle lang-content lang-hu">Európai Lélek • Friss • Kézzel Készítve Naponta</p>
 </header>
 
+<!-- ENGLISH TABS -->
 <nav class="tabs lang-content lang-en">
-    <a href="#salads-en" class="active">Salad Menu</a>
-    <a href="#pasta-en">Pasta Menu</a>
-    <a href="#fries-en">Chef's Loaded Fries</a>
+    <a href="#salads-en">Salads</a>
+    <a href="#pasta-en">Pasta</a>
+    <a href="#fries-en">Loaded Fries</a>
     <a href="#build-en">Custom Fries</a>
+    <a href="#cocktails-en">Cocktails</a>
 </nav>
 
+<!-- HUNGARIAN TABS -->
 <nav class="tabs lang-content lang-hu">
-    <a href="#salads-hu" class="active">Saláta Menü</a>
-    <a href="#pasta-hu">Tészta Menü</a>
-    <a href="#fries-hu">Chef's Loaded Sült</a>
+    <a href="#salads-hu">Saláták</a>
+    <a href="#pasta-hu">Tészták</a>
+    <a href="#fries-hu">Loaded Sült</a>
     <a href="#build-hu">Saját Sült</a>
+    <a href="#cocktails-hu">Koktélok</a>
 </nav>
 
 
@@ -270,6 +271,7 @@
 
 <!-- 🇬🇧 ENGLISH MENU START -->
 <div class="lang-content lang-en">
+
     <!-- 🥗 SALADS (EN) -->
     <section id="salads-en">
         <h2 class="section-title">🥗 Salad Menu</h2>
@@ -526,11 +528,66 @@
                 <div class="build-item"><span>🥓 Bacon</span><span>790 Ft</span></div>
             </div>
         </div>
-
-        <p class="note">🌿 Please inform our staff of any allergies. Numbers indicate allergens.</p>
     </section>
 
+    <!-- 🍹 COCKTAILS (EN) -->
+    <section id="cocktails-en">
+        <h2 class="section-title">🍹 Cocktail Menu</h2>
+
+        <div class="item">
+            <div class="item-top">
+                <div class="item-name">🍊 Aperol Spritz</div>
+                <div class="item-price">2 990 Ft</div>
+            </div>
+            <p class="item-desc">Aperol • Prosecco • Soda • Orange Slice</p>
+        </div>
+
+        <div class="item">
+            <div class="item-top">
+                <div class="item-name">🍋 Limoncello Spritz</div>
+                <div class="item-price">2 890 Ft</div>
+            </div>
+            <p class="item-desc">Limoncello • Prosecco • Soda • Lemon Zest</p>
+        </div>
+
+        <div class="item">
+            <div class="item-top">
+                <div class="item-name">🫒 Negroni</div>
+                <div class="item-price">3 290 Ft</div>
+            </div>
+            <p class="item-desc">Gin • Campari • Sweet Vermouth • Orange Peel</p>
+        </div>
+
+        <div class="item">
+            <div class="item-top">
+                <div class="item-name">🍸 Hugo</div>
+                <div class="item-price">2 690 Ft</div>
+            </div>
+            <p class="item-desc">Elderflower Syrup • Prosecco • Soda • Mint • Lime</p>
+        </div>
+
+        <div class="item">
+            <div class="item-top">
+                <div class="item-name">🍹 Mojito</div>
+                <div class="item-price">2 990 Ft</div>
+            </div>
+            <p class="item-desc">White Rum • Fresh Lime • Mint • Sugar • Soda</p>
+        </div>
+
+        <div class="item">
+            <div class="item-top">
+                <div class="item-name">🥃 Espresso Martini</div>
+                <div class="item-price">3 490 Ft</div>
+            </div>
+            <p class="item-desc">Vodka • Kahlúa • Fresh Espresso • Coffee Beans</p>
+        </div>
+    </section>
+
+    <p class="note">🌿 Please inform our staff of any allergies. Numbers indicate allergens.</p>
+
 </div> <!-- END ENGLISH CONTENT -->
+
+
 <!-- 🇭🇺 HUNGARIAN MENU START -->
 <div class="lang-content lang-hu">
 
@@ -790,9 +847,62 @@
                 <div class="build-item"><span>🥓 Bacon</span><span>790 Ft</span></div>
             </div>
         </div>
-
-        <p class="note">🌿 Kérjük, jelezze az allergiákat személyzetünknek. A számok allergéneket jelölnek.</p>
     </section>
+
+    <!-- 🍹 KOKTÉLOK (HU) -->
+    <section id="cocktails-hu">
+        <h2 class="section-title">🍹 Koktél Menü</h2>
+
+        <div class="item">
+            <div class="item-top">
+                <div class="item-name">🍊 Aperol Spritz</div>
+                <div class="item-price">2 990 Ft</div>
+            </div>
+            <p class="item-desc">Aperol • Prosecco • Szóda • Narancsszelet</p>
+        </div>
+
+        <div class="item">
+            <div class="item-top">
+                <div class="item-name">🍋 Limoncello Spritz</div>
+                <div class="item-price">2 890 Ft</div>
+            </div>
+            <p class="item-desc">Limoncello • Prosecco • Szóda • Citromhéj</p>
+        </div>
+
+        <div class="item">
+            <div class="item-top">
+                <div class="item-name">🫒 Negroni</div>
+                <div class="item-price">3 290 Ft</div>
+            </div>
+            <p class="item-desc">Gin • Campari • Édes Vermut • Narancshéj</p>
+        </div>
+
+        <div class="item">
+            <div class="item-top">
+                <div class="item-name">🍸 Hugo</div>
+                <div class="item-price">2 690 Ft</div>
+            </div>
+            <p class="item-desc">Bodzaszirup • Prosecco • Szóda • Menta • Lime</p>
+        </div>
+
+        <div class="item">
+            <div class="item-top">
+                <div class="item-name">🍹 Mojito</div>
+                <div class="item-price">2 990 Ft</div>
+            </div>
+            <p class="item-desc">Fehér Rum • Friss Lime • Menta • Cukor • Szóda</p>
+        </div>
+
+        <div class="item">
+            <div class="item-top">
+                <div class="item-name">🥃 Espresso Martini</div>
+                <div class="item-price">3 490 Ft</div>
+            </div>
+            <p class="item-desc">Vodka • Kahlúa • Friss Eszpresszó • Kávébab</p>
+        </div>
+    </section>
+
+    <p class="note">🌿 Kérjük, jelezze az allergiákat személyzetünknek. A számok allergéneket jelölnek.</p>
 
 </div> <!-- END HUNGARIAN CONTENT -->
 
@@ -804,8 +914,36 @@
     <small>PINTOLUCE.COM</small>
 </footer>
 
-<!-- JavaScript that handles language switching -->
-<script src="language-toggle.js"></script>
+<!-- JavaScript for language switching -->
+<script>
+(function() {
+    function setLang(lang, save) {
+        if (!['en', 'hu'].includes(lang)) lang = 'en';
+        document.body.classList.remove('lang-en', 'lang-hu');
+        document.body.classList.add('lang-' + lang);
+        document.documentElement.lang = lang;
+        document.querySelectorAll('[data-lang-switch]').forEach(function(el) {
+            el.classList.toggle('active', el.getAttribute('data-lang-switch') === lang);
+        });
+        if (save && window.localStorage) {
+            try { localStorage.setItem('pintoluce-lang', lang); } catch (e) {}
+        }
+    }
+    
+    var saved = null;
+    try { saved = window.localStorage && localStorage.getItem('pintoluce-lang'); } catch (e) {}
+    var initialLang = saved || (navigator.language && navigator.language.startsWith('hu') ? 'hu' : 'en');
+    setLang(initialLang, false);
+    
+    document.addEventListener('click', function(e) {
+        var target = e.target.closest('[data-lang-switch]');
+        if (target) {
+            e.preventDefault();
+            setLang(target.getAttribute('data-lang-switch'), true);
+        }
+    });
+})();
+</script>
 
 </body>
 </html>
