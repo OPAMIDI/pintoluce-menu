@@ -57,7 +57,7 @@
 
     /* CATEGORY TABS */
     .tabs {
-        display: none; /* Hidden by default, shown via lang classes */
+        display: none;
         flex-wrap: wrap;
         justify-content: center;
         gap: 8px;
@@ -90,6 +90,7 @@
         margin: 0 auto;
         padding-bottom: 100px;
     }
+    
     .section-title {
         text-align: center;
         color: #d4a84b;
@@ -99,6 +100,15 @@
         margin-bottom: 1rem;
         padding-bottom: 0.5rem;
         border-bottom: 1px solid rgba(212,168,75,0.3);
+    }
+    
+    .subsection-title {
+        color: #e8d5a3;
+        font-size: 1rem;
+        font-weight: 700;
+        margin: 1.5rem 0 0.75rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid rgba(52,211,153,0.2);
     }
 
     .item {
@@ -145,6 +155,34 @@
         padding: 3px 8px;
         border-radius: 20px;
         margin-top: 6px;
+    }
+
+    /* Drink items - compact style */
+    .drink-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 12px;
+        background: rgba(255,255,255,0.04);
+        border: 1px solid rgba(52,211,153,0.1);
+        border-radius: 10px;
+        margin-bottom: 6px;
+    }
+    .drink-name {
+        color: #e8d5a3;
+        font-size: 0.9rem;
+        font-weight: 500;
+    }
+    .drink-prices {
+        color: #d4a84b;
+        font-size: 0.8rem;
+        font-weight: 600;
+        text-align: right;
+        white-space: nowrap;
+    }
+    .drink-prices small {
+        color: rgba(168,197,168,0.6);
+        font-weight: 400;
     }
 
     .build-box {
@@ -214,12 +252,10 @@
         border-top: 1px solid rgba(52,211,153,0.2);
     }
 
-    /* LANGUAGE VISIBILITY - FIXED */
+    /* LANGUAGE VISIBILITY */
     .lang-content { display: none; }
     body.lang-en .lang-content.lang-en { display: block; }
     body.lang-hu .lang-content.lang-hu { display: block; }
-
-    /* FIX FOR TABS - they need flex, not block */
     body.lang-en nav.tabs.lang-en { display: flex; }
     body.lang-hu nav.tabs.lang-hu { display: flex; }
 
@@ -254,7 +290,7 @@
     <a href="#pasta-en">Pasta</a>
     <a href="#fries-en">Loaded Fries</a>
     <a href="#build-en">Custom Fries</a>
-    <a href="#cocktails-en">Cocktails</a>
+    <a href="#drinks-en">Drinks</a>
 </nav>
 
 <!-- HUNGARIAN TABS -->
@@ -263,7 +299,7 @@
     <a href="#pasta-hu">Tészták</a>
     <a href="#fries-hu">Loaded Sült</a>
     <a href="#build-hu">Saját Sült</a>
-    <a href="#cocktails-hu">Koktélok</a>
+    <a href="#drinks-hu">Italok</a>
 </nav>
 
 
@@ -498,27 +534,21 @@
         <h2 class="section-title">🍟 Build Your Own</h2>
 
         <div class="build-box">
-            <div class="build-title">
-                <span class="build-num">1</span> Choose Your Base
-            </div>
+            <div class="build-title"><span class="build-num">1</span> Choose Your Base</div>
             <div class="build-item"><span>🥔 Classic Potato Fries</span><span>1 890 Ft</span></div>
             <div class="build-item"><span>🥔 Potato Wedges</span><span>2 090 Ft</span></div>
             <div class="build-item"><span>🍠 Sweet Potato Fries</span><span>2 390 Ft</span></div>
         </div>
 
         <div class="build-box">
-            <div class="build-title">
-                <span class="build-num">2</span> Sauces
-            </div>
+            <div class="build-title"><span class="build-num">2</span> Sauces</div>
             <div class="build-item"><span>🤍 Classic Mayo</span><span>390 Ft</span></div>
             <div class="build-item"><span>💗 Pink Mayo (Beetroot)</span><span>390 Ft</span></div>
             <div class="build-item"><span>🔥 Spicy Mayo</span><span>390 Ft</span></div>
         </div>
 
         <div class="build-box">
-            <div class="build-title">
-                <span class="build-num">3</span> Toppings
-            </div>
+            <div class="build-title"><span class="build-num">3</span> Toppings</div>
             <div class="build-grid">
                 <div class="build-item"><span>🍅 Tomato Salata</span><span>390 Ft</span></div>
                 <div class="build-item"><span>🌶 Jalapeños</span><span>390 Ft</span></div>
@@ -530,57 +560,172 @@
         </div>
     </section>
 
-    <!-- 🍹 COCKTAILS (EN) -->
-    <section id="cocktails-en">
-        <h2 class="section-title">🍹 Cocktail Menu</h2>
+    <!-- 🍹 DRINKS (EN) -->
+    <section id="drinks-en">
+        <h2 class="section-title">🍹 Drinks Menu</h2>
 
-        <div class="item">
-            <div class="item-top">
-                <div class="item-name">🍊 Aperol Spritz</div>
-                <div class="item-price">2 990 Ft</div>
-            </div>
-            <p class="item-desc">Aperol • Prosecco • Soda • Orange Slice</p>
-        </div>
+        <!-- COCKTAILS -->
+        <h3 class="subsection-title">🍸 Cocktails</h3>
+        <div class="drink-item"><span class="drink-name">Aperol Spritzer</span><span class="drink-prices">2 190 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Appletini</span><span class="drink-prices">2 190 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Caipirinha</span><span class="drink-prices">2 490 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Campari Spritzer</span><span class="drink-prices">2 190 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Cherry Cola</span><span class="drink-prices">1 790 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Classic Daiquiri</span><span class="drink-prices">1 790 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Coconut Daiquiri</span><span class="drink-prices">2 190 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Cosmopolitan</span><span class="drink-prices">2 190 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Espresso Martini</span><span class="drink-prices">2 190 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Hugo</span><span class="drink-prices">1 790 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Limoncello Spritzer</span><span class="drink-prices">2 190 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Long Beach Iced Tea</span><span class="drink-prices">2 990 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Long Island Iced Tea</span><span class="drink-prices">2 990 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Margarita</span><span class="drink-prices">1 790 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Mimosa</span><span class="drink-prices">2 090 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Mojito</span><span class="drink-prices">1 790 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Negroni</span><span class="drink-prices">2 490 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Old Fashioned</span><span class="drink-prices">2 990 Ft</span></div>
 
-        <div class="item">
-            <div class="item-top">
-                <div class="item-name">🍋 Limoncello Spritz</div>
-                <div class="item-price">2 890 Ft</div>
-            </div>
-            <p class="item-desc">Limoncello • Prosecco • Soda • Lemon Zest</p>
-        </div>
+        <!-- MOCKTAILS -->
+        <h3 class="subsection-title">🥤 Mocktails</h3>
+        <div class="drink-item"><span class="drink-name">Apple Peach Sunrise</span><span class="drink-prices">1 490 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">The Beach</span><span class="drink-prices">1 490 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Virgin Mojito</span><span class="drink-prices">1 490 Ft</span></div>
 
-        <div class="item">
-            <div class="item-top">
-                <div class="item-name">🫒 Negroni</div>
-                <div class="item-price">3 290 Ft</div>
-            </div>
-            <p class="item-desc">Gin • Campari • Sweet Vermouth • Orange Peel</p>
-        </div>
+        <!-- SPIRITS - GIN -->
+        <h3 class="subsection-title">🍸 Gin</h3>
+        <div class="drink-item"><span class="drink-name">Bombay Sapphire</span><span class="drink-prices"><small>2cl</small> 1 490 | <small>4cl</small> 1 890 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Hendricks</span><span class="drink-prices"><small>2cl</small> 1 590 | <small>4cl</small> 2 190 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Malfy Con Arancia</span><span class="drink-prices"><small>2cl</small> 1 590 | <small>4cl</small> 2 090 Ft</span></div>
 
-        <div class="item">
-            <div class="item-top">
-                <div class="item-name">🍸 Hugo</div>
-                <div class="item-price">2 690 Ft</div>
-            </div>
-            <p class="item-desc">Elderflower Syrup • Prosecco • Soda • Mint • Lime</p>
-        </div>
+        <!-- RUM -->
+        <h3 class="subsection-title">🍹 Rum</h3>
+        <div class="drink-item"><span class="drink-name">Bacardi Carta Blanca</span><span class="drink-prices"><small>2cl</small> 1 490 | <small>4cl</small> 1 890 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Captain Morgan Spiced</span><span class="drink-prices"><small>2cl</small> 1 590 | <small>4cl</small> 2 090 Ft</span></div>
 
-        <div class="item">
-            <div class="item-top">
-                <div class="item-name">🍹 Mojito</div>
-                <div class="item-price">2 990 Ft</div>
-            </div>
-            <p class="item-desc">White Rum • Fresh Lime • Mint • Sugar • Soda</p>
-        </div>
+        <!-- VODKA -->
+        <h3 class="subsection-title">🍾 Vodka</h3>
+        <div class="drink-item"><span class="drink-name">Absolut Vodka</span><span class="drink-prices"><small>2cl</small> 1 590 | <small>4cl</small> 2 090 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Eristoff Premium</span><span class="drink-prices"><small>2cl</small> 1 490 | <small>4cl</small> 1 990 Ft</span></div>
 
-        <div class="item">
-            <div class="item-top">
-                <div class="item-name">🥃 Espresso Martini</div>
-                <div class="item-price">3 490 Ft</div>
-            </div>
-            <p class="item-desc">Vodka • Kahlúa • Fresh Espresso • Coffee Beans</p>
-        </div>
+        <!-- TEQUILA -->
+        <h3 class="subsection-title">🥃 Tequila</h3>
+        <div class="drink-item"><span class="drink-name">Jose Cuervo Gold Reposado</span><span class="drink-prices"><small>2cl</small> 1 590 | <small>4cl</small> 2 090 Ft</span></div>
+
+        <!-- WHISKY -->
+        <h3 class="subsection-title">🥃 Whisky / Whiskey</h3>
+        <div class="drink-item"><span class="drink-name">Jack Daniel's No.7</span><span class="drink-prices"><small>2cl</small> 1 590 | <small>4cl</small> 2 090 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Jameson Irish</span><span class="drink-prices"><small>2cl</small> 1 590 | <small>4cl</small> 2 090 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Maker's Mark</span><span class="drink-prices"><small>2cl</small> 2 090 | <small>4cl</small> 2 390 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Talisker 10 Years</span><span class="drink-prices"><small>2cl</small> 2 490 | <small>4cl</small> 2 990 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">The Famous Grouse</span><span class="drink-prices"><small>2cl</small> 1 490 | <small>4cl</small> 1 990 Ft</span></div>
+
+        <!-- VERMOUTH -->
+        <h3 class="subsection-title">🍷 Vermouth</h3>
+        <div class="drink-item"><span class="drink-name">Martini Bianco</span><span class="drink-prices"><small>4cl</small> 1 690 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Martini Extra Dry</span><span class="drink-prices"><small>4cl</small> 1 690 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Martini Rosso</span><span class="drink-prices"><small>4cl</small> 1 690 Ft</span></div>
+
+        <!-- LIQUEURS -->
+        <h3 class="subsection-title">🍬 Liqueurs</h3>
+        <div class="drink-item"><span class="drink-name">Amaretto Disaronno</span><span class="drink-prices"><small>2cl</small> 1 490 | <small>4cl</small> 1 990 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Aperol</span><span class="drink-prices"><small>4cl</small> 1 890 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Baileys</span><span class="drink-prices"><small>4cl</small> 1 890 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Campari</span><span class="drink-prices"><small>4cl</small> 1 890 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Cointreau</span><span class="drink-prices"><small>2cl</small> 1 490 | <small>4cl</small> 1 990 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Jägermeister</span><span class="drink-prices"><small>2cl</small> 1 590 | <small>4cl</small> 2 090 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Kahlúa Coffee Liqueur</span><span class="drink-prices"><small>2cl</small> 1 490 | <small>4cl</small> 1 990 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Limoncello Molinari</span><span class="drink-prices"><small>2cl</small> 1 490 | <small>4cl</small> 1 990 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Zwack Unicum</span><span class="drink-prices"><small>2cl</small> 1 590 | <small>4cl</small> 2 090 Ft</span></div>
+
+        <!-- PÁLINKA -->
+        <h3 class="subsection-title">🇭🇺 Pálinka</h3>
+        <div class="drink-item"><span class="drink-name">Árpád Dupla Ágyas Szilva</span><span class="drink-prices"><small>2cl</small> 1 690 | <small>4cl</small> 2 190 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Árpád Silver Kajszibarack</span><span class="drink-prices"><small>2cl</small> 1 790 | <small>4cl</small> 2 290 Ft</span></div>
+
+        <!-- BEER DRAUGHT -->
+        <h3 class="subsection-title">🍺 Draught Beer</h3>
+        <div class="drink-item"><span class="drink-name">Dreher Gold</span><span class="drink-prices"><small>0.3l</small> 990 | <small>0.5l</small> 1 390 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Peroni Nastro Azzurro</span><span class="drink-prices"><small>0.3l</small> 1 090 | <small>0.5l</small> 1 490 Ft</span></div>
+
+        <!-- BEER BOTTLED -->
+        <h3 class="subsection-title">🍺 Bottled Beer</h3>
+        <div class="drink-item"><span class="drink-name">Dreher 24 Blue</span><span class="drink-prices"><small>0.33l</small> 1 190 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Dreher Gold</span><span class="drink-prices"><small>0.33l</small> 1 190 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Peroni Nastro Azzurro</span><span class="drink-prices"><small>0.33l</small> 1 290 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Pilsner Urquell</span><span class="drink-prices"><small>0.33l</small> 1 390 Ft</span></div>
+
+        <!-- CRAFT BEER -->
+        <h3 class="subsection-title">🍺 Craft Beer (Budapest)</h3>
+        <div class="drink-item"><span class="drink-name">BudaPrés (K)ömlős</span><span class="drink-prices"><small>0.33l</small> 1 790 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">BudaPrés Birs</span><span class="drink-prices"><small>0.33l</small> 1 790 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">BudaPrés Kedvesem!</span><span class="drink-prices"><small>0.33l</small> 1 790 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">BudaPrés Tiszás</span><span class="drink-prices"><small>0.33l</small> 1 790 Ft</span></div>
+
+        <!-- WINE RED -->
+        <h3 class="subsection-title">🍷 Red Wine</h3>
+        <div class="drink-item"><span class="drink-name">Bodor Merlot</span><span class="drink-prices"><small>0.15l</small> 1 190 | <small>0.75l</small> 5 950 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Ékkő Égkő Pinot Noir</span><span class="drink-prices"><small>0.15l</small> 1 290 | <small>0.75l</small> 6 450 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Gere Attila Cabernet Sauvignon</span><span class="drink-prices"><small>0.15l</small> 1 090 | <small>0.75l</small> 5 450 Ft</span></div>
+
+        <!-- WINE WHITE -->
+        <h3 class="subsection-title">🥂 White Wine</h3>
+        <div class="drink-item"><span class="drink-name">Babiczki Sauvignon Blanc</span><span class="drink-prices"><small>0.15l</small> 1 290 | <small>0.75l</small> 6 450 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Bakonyi Irsai Olivér</span><span class="drink-prices"><small>0.15l</small> 1 190 | <small>0.75l</small> 5 950 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Gere Attila Olaszrizling</span><span class="drink-prices"><small>0.15l</small> 1 090 | <small>0.75l</small> 5 450 Ft</span></div>
+
+        <!-- WINE ROSÉ -->
+        <h3 class="subsection-title">🌸 Rosé</h3>
+        <div class="drink-item"><span class="drink-name">Gere Attila Rosé Cuvée</span><span class="drink-prices"><small>0.15l</small> 1 090 | <small>0.75l</small> 5 450 Ft</span></div>
+
+        <!-- CHAMPAGNE -->
+        <h3 class="subsection-title">🍾 Champagne / Prosecco</h3>
+        <div class="drink-item"><span class="drink-name">Sacchetto Prosecco Extra Dry</span><span class="drink-prices"><small>0.15l</small> 1 490 | <small>0.75l</small> 7 450 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Törley Tokaji Brut</span><span class="drink-prices"><small>0.75l</small> 7 990 Ft</span></div>
+
+        <!-- SOFT DRINKS -->
+        <h3 class="subsection-title">🥤 Soft Drinks</h3>
+        <div class="drink-item"><span class="drink-name">Coca-Cola / Zero / Fanta / Sprite</span><span class="drink-prices"><small>0.33l</small> 890 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Apple / Orange / Peach Juice</span><span class="drink-prices"><small>0.33l</small> 890 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Ginger Ale</span><span class="drink-prices"><small>0.33l</small> 890 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Three Cents Tonic (Classic/Pink/Dry)</span><span class="drink-prices"><small>0.33l</small> 890 Ft</span></div>
+
+        <!-- LEMONADE -->
+        <h3 class="subsection-title">🍋 Lemonade / Iced Tea</h3>
+        <div class="drink-item"><span class="drink-name">Classic Lemonade</span><span class="drink-prices"><small>0.5l</small> 1 290 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Flavoured Lemonade</span><span class="drink-prices"><small>0.5l</small> 1 290 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Ice Tea</span><span class="drink-prices"><small>0.5l</small> 1 290 Ft</span></div>
+
+        <!-- HOT DRINKS -->
+        <h3 class="subsection-title">☕ Hot Drinks</h3>
+        <div class="drink-item"><span class="drink-name">Espresso</span><span class="drink-prices">890 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Double Espresso</span><span class="drink-prices">990 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Macchiato</span><span class="drink-prices">1 090 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Cappuccino</span><span class="drink-prices">1 290 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Caffè Latte</span><span class="drink-prices">1 290 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Flat White</span><span class="drink-prices">1 290 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Moccaccino</span><span class="drink-prices">1 290 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Hot Chocolate</span><span class="drink-prices">1 290 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Hot Tea</span><span class="drink-prices">990 Ft</span></div>
+
+        <!-- MILK -->
+        <h3 class="subsection-title">🥛 Milk</h3>
+        <div class="drink-item"><span class="drink-name">3.5% Milk</span><span class="drink-prices"><small>0.3l</small> 290 | <small>1 portion</small> 490 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Lactose-Free Milk</span><span class="drink-prices"><small>0.3l</small> 290 | <small>1 portion</small> 490 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Almond Milk</span><span class="drink-prices"><small>0.3l</small> 290 | <small>1 portion</small> 490 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Cream (Tejszín)</span><span class="drink-prices"><small>0.3l</small> 290 Ft</span></div>
+
+        <!-- WATER -->
+        <h3 class="subsection-title">💧 Water</h3>
+        <div class="drink-item"><span class="drink-name">Natur Aqua</span><span class="drink-prices"><small>0.3l</small> 690 | <small>0.75l</small> 890 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Flow Water</span><span class="drink-prices"><small>0.3l</small> 690 | <small>0.75l</small> 890 Ft</span></div>
+
+        <!-- SYRUPS -->
+        <h3 class="subsection-title">🍓 Syrups (25ml)</h3>
+        <div class="drink-item"><span class="drink-name">Elderflower (Bodza)</span><span class="drink-prices">250 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Strawberry (Szamóca)</span><span class="drink-prices">250 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Mango</span><span class="drink-prices">250 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Orange (Narancs)</span><span class="drink-prices">250 Ft</span></div>
+
     </section>
 
     <p class="note">🌿 Please inform our staff of any allergies. Numbers indicate allergens.</p>
@@ -817,27 +962,21 @@
         <h2 class="section-title">🍟 Állítsd Össze</h2>
 
         <div class="build-box">
-            <div class="build-title">
-                <span class="build-num">1</span> Válassz Alapot
-            </div>
+            <div class="build-title"><span class="build-num">1</span> Válassz Alapot</div>
             <div class="build-item"><span>🥔 Klasszikus Sültkrumpli</span><span>1 890 Ft</span></div>
             <div class="build-item"><span>🥔 Burgonya Wedges</span><span>2 090 Ft</span></div>
             <div class="build-item"><span>🍠 Édesburgonya Sült</span><span>2 390 Ft</span></div>
         </div>
 
         <div class="build-box">
-            <div class="build-title">
-                <span class="build-num">2</span> Szószok
-            </div>
+            <div class="build-title"><span class="build-num">2</span> Szószok</div>
             <div class="build-item"><span>🤍 Klasszikus Majonéz</span><span>390 Ft</span></div>
             <div class="build-item"><span>💗 Pink Majonéz (Cékla)</span><span>390 Ft</span></div>
             <div class="build-item"><span>🔥 Csípős Majonéz</span><span>390 Ft</span></div>
         </div>
 
         <div class="build-box">
-            <div class="build-title">
-                <span class="build-num">3</span> Feltétek
-            </div>
+            <div class="build-title"><span class="build-num">3</span> Feltétek</div>
             <div class="build-grid">
                 <div class="build-item"><span>🍅 Paradicsom Saláta</span><span>390 Ft</span></div>
                 <div class="build-item"><span>🌶 Jalapeño</span><span>390 Ft</span></div>
@@ -849,57 +988,172 @@
         </div>
     </section>
 
-    <!-- 🍹 KOKTÉLOK (HU) -->
-    <section id="cocktails-hu">
-        <h2 class="section-title">🍹 Koktél Menü</h2>
+    <!-- 🍹 ITALOK (HU) -->
+    <section id="drinks-hu">
+        <h2 class="section-title">🍹 Italok</h2>
 
-        <div class="item">
-            <div class="item-top">
-                <div class="item-name">🍊 Aperol Spritz</div>
-                <div class="item-price">2 990 Ft</div>
-            </div>
-            <p class="item-desc">Aperol • Prosecco • Szóda • Narancsszelet</p>
-        </div>
+        <!-- KOKTÉLOK -->
+        <h3 class="subsection-title">🍸 Koktélok</h3>
+        <div class="drink-item"><span class="drink-name">Aperol Spritzer</span><span class="drink-prices">2 190 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Appletini</span><span class="drink-prices">2 190 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Caipirinha</span><span class="drink-prices">2 490 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Campari Spritzer</span><span class="drink-prices">2 190 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Cherry Cola</span><span class="drink-prices">1 790 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Classic Daiquiri</span><span class="drink-prices">1 790 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Coconut Daiquiri</span><span class="drink-prices">2 190 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Cosmopolitan</span><span class="drink-prices">2 190 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Espresso Martini</span><span class="drink-prices">2 190 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Hugo</span><span class="drink-prices">1 790 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Limoncello Spritzer</span><span class="drink-prices">2 190 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Long Beach Iced Tea</span><span class="drink-prices">2 990 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Long Island Iced Tea</span><span class="drink-prices">2 990 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Margarita</span><span class="drink-prices">1 790 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Mimosa</span><span class="drink-prices">2 090 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Mojito</span><span class="drink-prices">1 790 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Negroni</span><span class="drink-prices">2 490 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Old Fashioned</span><span class="drink-prices">2 990 Ft</span></div>
 
-        <div class="item">
-            <div class="item-top">
-                <div class="item-name">🍋 Limoncello Spritz</div>
-                <div class="item-price">2 890 Ft</div>
-            </div>
-            <p class="item-desc">Limoncello • Prosecco • Szóda • Citromhéj</p>
-        </div>
+        <!-- ALKOHOLMENTES -->
+        <h3 class="subsection-title">🥤 Alkoholmentes Koktélok</h3>
+        <div class="drink-item"><span class="drink-name">Apple Peach Sunrise</span><span class="drink-prices">1 490 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">The Beach</span><span class="drink-prices">1 490 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Virgin Mojito</span><span class="drink-prices">1 490 Ft</span></div>
 
-        <div class="item">
-            <div class="item-top">
-                <div class="item-name">🫒 Negroni</div>
-                <div class="item-price">3 290 Ft</div>
-            </div>
-            <p class="item-desc">Gin • Campari • Édes Vermut • Narancshéj</p>
-        </div>
+        <!-- GIN -->
+        <h3 class="subsection-title">🍸 Gin</h3>
+        <div class="drink-item"><span class="drink-name">Bombay Sapphire</span><span class="drink-prices"><small>2cl</small> 1 490 | <small>4cl</small> 1 890 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Hendricks</span><span class="drink-prices"><small>2cl</small> 1 590 | <small>4cl</small> 2 190 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Malfy Con Arancia</span><span class="drink-prices"><small>2cl</small> 1 590 | <small>4cl</small> 2 090 Ft</span></div>
 
-        <div class="item">
-            <div class="item-top">
-                <div class="item-name">🍸 Hugo</div>
-                <div class="item-price">2 690 Ft</div>
-            </div>
-            <p class="item-desc">Bodzaszirup • Prosecco • Szóda • Menta • Lime</p>
-        </div>
+        <!-- RUM -->
+        <h3 class="subsection-title">🍹 Rum</h3>
+        <div class="drink-item"><span class="drink-name">Bacardi Carta Blanca</span><span class="drink-prices"><small>2cl</small> 1 490 | <small>4cl</small> 1 890 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Captain Morgan Spiced</span><span class="drink-prices"><small>2cl</small> 1 590 | <small>4cl</small> 2 090 Ft</span></div>
 
-        <div class="item">
-            <div class="item-top">
-                <div class="item-name">🍹 Mojito</div>
-                <div class="item-price">2 990 Ft</div>
-            </div>
-            <p class="item-desc">Fehér Rum • Friss Lime • Menta • Cukor • Szóda</p>
-        </div>
+        <!-- VODKA -->
+        <h3 class="subsection-title">🍾 Vodka</h3>
+        <div class="drink-item"><span class="drink-name">Absolut Vodka</span><span class="drink-prices"><small>2cl</small> 1 590 | <small>4cl</small> 2 090 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Eristoff Premium</span><span class="drink-prices"><small>2cl</small> 1 490 | <small>4cl</small> 1 990 Ft</span></div>
 
-        <div class="item">
-            <div class="item-top">
-                <div class="item-name">🥃 Espresso Martini</div>
-                <div class="item-price">3 490 Ft</div>
-            </div>
-            <p class="item-desc">Vodka • Kahlúa • Friss Eszpresszó • Kávébab</p>
-        </div>
+        <!-- TEQUILA -->
+        <h3 class="subsection-title">🥃 Tequila</h3>
+        <div class="drink-item"><span class="drink-name">Jose Cuervo Gold Reposado</span><span class="drink-prices"><small>2cl</small> 1 590 | <small>4cl</small> 2 090 Ft</span></div>
+
+        <!-- WHISKY -->
+        <h3 class="subsection-title">🥃 Whisky / Whiskey</h3>
+        <div class="drink-item"><span class="drink-name">Jack Daniel's No.7</span><span class="drink-prices"><small>2cl</small> 1 590 | <small>4cl</small> 2 090 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Jameson Irish</span><span class="drink-prices"><small>2cl</small> 1 590 | <small>4cl</small> 2 090 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Maker's Mark</span><span class="drink-prices"><small>2cl</small> 2 090 | <small>4cl</small> 2 390 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Talisker 10 Years</span><span class="drink-prices"><small>2cl</small> 2 490 | <small>4cl</small> 2 990 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">The Famous Grouse</span><span class="drink-prices"><small>2cl</small> 1 490 | <small>4cl</small> 1 990 Ft</span></div>
+
+        <!-- VERMUT -->
+        <h3 class="subsection-title">🍷 Vermut</h3>
+        <div class="drink-item"><span class="drink-name">Martini Bianco</span><span class="drink-prices"><small>4cl</small> 1 690 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Martini Extra Dry</span><span class="drink-prices"><small>4cl</small> 1 690 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Martini Rosso</span><span class="drink-prices"><small>4cl</small> 1 690 Ft</span></div>
+
+        <!-- LIKŐRÖK -->
+        <h3 class="subsection-title">🍬 Likőrök</h3>
+        <div class="drink-item"><span class="drink-name">Amaretto Disaronno</span><span class="drink-prices"><small>2cl</small> 1 490 | <small>4cl</small> 1 990 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Aperol</span><span class="drink-prices"><small>4cl</small> 1 890 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Baileys</span><span class="drink-prices"><small>4cl</small> 1 890 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Campari</span><span class="drink-prices"><small>4cl</small> 1 890 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Cointreau</span><span class="drink-prices"><small>2cl</small> 1 490 | <small>4cl</small> 1 990 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Jägermeister</span><span class="drink-prices"><small>2cl</small> 1 590 | <small>4cl</small> 2 090 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Kahlúa Kávélikőr</span><span class="drink-prices"><small>2cl</small> 1 490 | <small>4cl</small> 1 990 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Limoncello Molinari</span><span class="drink-prices"><small>2cl</small> 1 490 | <small>4cl</small> 1 990 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Zwack Unicum</span><span class="drink-prices"><small>2cl</small> 1 590 | <small>4cl</small> 2 090 Ft</span></div>
+
+        <!-- PÁLINKA -->
+        <h3 class="subsection-title">🇭🇺 Pálinka</h3>
+        <div class="drink-item"><span class="drink-name">Árpád Dupla Ágyas Szilva</span><span class="drink-prices"><small>2cl</small> 1 690 | <small>4cl</small> 2 190 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Árpád Silver Kajszibarack</span><span class="drink-prices"><small>2cl</small> 1 790 | <small>4cl</small> 2 290 Ft</span></div>
+
+        <!-- CSAPOLT SÖR -->
+        <h3 class="subsection-title">🍺 Csapolt Sör</h3>
+        <div class="drink-item"><span class="drink-name">Dreher Gold</span><span class="drink-prices"><small>0.3l</small> 990 | <small>0.5l</small> 1 390 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Peroni Nastro Azzurro</span><span class="drink-prices"><small>0.3l</small> 1 090 | <small>0.5l</small> 1 490 Ft</span></div>
+
+        <!-- ÜVEGES SÖR -->
+        <h3 class="subsection-title">🍺 Üveges Sör</h3>
+        <div class="drink-item"><span class="drink-name">Dreher 24 Blue</span><span class="drink-prices"><small>0.33l</small> 1 190 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Dreher Gold</span><span class="drink-prices"><small>0.33l</small> 1 190 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Peroni Nastro Azzurro</span><span class="drink-prices"><small>0.33l</small> 1 290 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Pilsner Urquell</span><span class="drink-prices"><small>0.33l</small> 1 390 Ft</span></div>
+
+        <!-- KÉZMŰVES SÖR -->
+        <h3 class="subsection-title">🍺 Kézműves Sör (Budapest)</h3>
+        <div class="drink-item"><span class="drink-name">BudaPrés (K)ömlős</span><span class="drink-prices"><small>0.33l</small> 1 790 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">BudaPrés Birs</span><span class="drink-prices"><small>0.33l</small> 1 790 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">BudaPrés Kedvesem!</span><span class="drink-prices"><small>0.33l</small> 1 790 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">BudaPrés Tiszás</span><span class="drink-prices"><small>0.33l</small> 1 790 Ft</span></div>
+
+        <!-- VÖRÖSBOR -->
+        <h3 class="subsection-title">🍷 Vörösbor</h3>
+        <div class="drink-item"><span class="drink-name">Bodor Merlot</span><span class="drink-prices"><small>0.15l</small> 1 190 | <small>0.75l</small> 5 950 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Ékkő Égkő Pinot Noir</span><span class="drink-prices"><small>0.15l</small> 1 290 | <small>0.75l</small> 6 450 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Gere Attila Cabernet Sauvignon</span><span class="drink-prices"><small>0.15l</small> 1 090 | <small>0.75l</small> 5 450 Ft</span></div>
+
+        <!-- FEHÉRBOR -->
+        <h3 class="subsection-title">🥂 Fehérbor</h3>
+        <div class="drink-item"><span class="drink-name">Babiczki Sauvignon Blanc</span><span class="drink-prices"><small>0.15l</small> 1 290 | <small>0.75l</small> 6 450 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Bakonyi Irsai Olivér</span><span class="drink-prices"><small>0.15l</small> 1 190 | <small>0.75l</small> 5 950 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Gere Attila Olaszrizling</span><span class="drink-prices"><small>0.15l</small> 1 090 | <small>0.75l</small> 5 450 Ft</span></div>
+
+        <!-- ROSÉ -->
+        <h3 class="subsection-title">🌸 Rosé</h3>
+        <div class="drink-item"><span class="drink-name">Gere Attila Rosé Cuvée</span><span class="drink-prices"><small>0.15l</small> 1 090 | <small>0.75l</small> 5 450 Ft</span></div>
+
+        <!-- PEZSGŐ -->
+        <h3 class="subsection-title">🍾 Pezsgő / Prosecco</h3>
+        <div class="drink-item"><span class="drink-name">Sacchetto Prosecco Extra Dry</span><span class="drink-prices"><small>0.15l</small> 1 490 | <small>0.75l</small> 7 450 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Törley Tokaji Brut</span><span class="drink-prices"><small>0.75l</small> 7 990 Ft</span></div>
+
+        <!-- ÜDÍTŐK -->
+        <h3 class="subsection-title">🥤 Üdítők</h3>
+        <div class="drink-item"><span class="drink-name">Coca-Cola / Zero / Fanta / Sprite</span><span class="drink-prices"><small>0.33l</small> 890 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Alma / Narancs / Barack lé</span><span class="drink-prices"><small>0.33l</small> 890 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Ginger Ale</span><span class="drink-prices"><small>0.33l</small> 890 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Three Cents Tonik (Classic/Pink/Dry)</span><span class="drink-prices"><small>0.33l</small> 890 Ft</span></div>
+
+        <!-- LIMONÁDÉ -->
+        <h3 class="subsection-title">🍋 Limonádé / Jeges Tea</h3>
+        <div class="drink-item"><span class="drink-name">Klasszikus Limonádé</span><span class="drink-prices"><small>0.5l</small> 1 290 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Ízesített Limonádé</span><span class="drink-prices"><small>0.5l</small> 1 290 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Jeges Tea</span><span class="drink-prices"><small>0.5l</small> 1 290 Ft</span></div>
+
+        <!-- MELEG ITALOK -->
+        <h3 class="subsection-title">☕ Meleg Italok</h3>
+        <div class="drink-item"><span class="drink-name">Espresso</span><span class="drink-prices">890 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Dupla Espresso</span><span class="drink-prices">990 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Macchiato</span><span class="drink-prices">1 090 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Cappuccino</span><span class="drink-prices">1 290 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Caffè Latte</span><span class="drink-prices">1 290 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Flat White</span><span class="drink-prices">1 290 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Moccaccino</span><span class="drink-prices">1 290 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Forró Csoki</span><span class="drink-prices">1 290 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Forró Tea</span><span class="drink-prices">990 Ft</span></div>
+
+        <!-- TEJ -->
+        <h3 class="subsection-title">🥛 Tej</h3>
+        <div class="drink-item"><span class="drink-name">3.5% Tej</span><span class="drink-prices"><small>0.3l</small> 290 | <small>1 adag</small> 490 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Laktózmentes Tej</span><span class="drink-prices"><small>0.3l</small> 290 | <small>1 adag</small> 490 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Mandulatej</span><span class="drink-prices"><small>0.3l</small> 290 | <small>1 adag</small> 490 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Tejszín</span><span class="drink-prices"><small>0.3l</small> 290 Ft</span></div>
+
+        <!-- VÍZ -->
+        <h3 class="subsection-title">💧 Víz</h3>
+        <div class="drink-item"><span class="drink-name">Natur Aqua</span><span class="drink-prices"><small>0.3l</small> 690 | <small>0.75l</small> 890 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Flow Water</span><span class="drink-prices"><small>0.3l</small> 690 | <small>0.75l</small> 890 Ft</span></div>
+
+        <!-- SZIRUPOK -->
+        <h3 class="subsection-title">🍓 Szirupok (25ml)</h3>
+        <div class="drink-item"><span class="drink-name">Bodza</span><span class="drink-prices">250 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Szamóca</span><span class="drink-prices">250 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Mangó</span><span class="drink-prices">250 Ft</span></div>
+        <div class="drink-item"><span class="drink-name">Narancs</span><span class="drink-prices">250 Ft</span></div>
+
     </section>
 
     <p class="note">🌿 Kérjük, jelezze az allergiákat személyzetünknek. A számok allergéneket jelölnek.</p>
@@ -947,4 +1201,3 @@
 
 </body>
 </html>
-
